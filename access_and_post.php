@@ -1,8 +1,22 @@
 <?php
-require('OAuth.php');
+/**
+ * 获取 Access Token 并发送数据
+ *
+ * 这是 OAuth 验证的下半部分，上半部分请看 request_token.php
+ */
 
-$hmac_method = new OAuthSignatureMethod_HMAC_SHA1();
-$sig_method = $hmac_method;
+// 包含相应文件
+require('OAuth.php');
+require('config.inc');
+
+// 获取之前的 oauth_token 。在上一步授权之后会带着 oauth_token 参数跳转到本页，见 request_token.php
+$oauth_token = $_REQUEST['oauth_token'];
+
+$request_token = new OAuthConsumer($params['oauth_token'], $params['oauth_token_secret']);
+$acc_req = OAuthRequest::from_consumer_and_token($test_consumer, $token, "GET", $access_url, $params);
+$acc_req->sign_request($sig_method, $test_consumer, $token);
+
+var_dump($acc_req->to_url());
 
 $key = '0fddce7bb96c9ce52f996b732c45d6af';
 $secret = '39d462490180bf67';
