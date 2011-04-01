@@ -1,0 +1,3 @@
+想要使用豆瓣的 OAuth 验证来做一些小东西玩，但是发现豆瓣给出的 OAuth PHP 示例需要安装很多东西，不够简单明了。于是我就写了一个简单的豆瓣 OAuth PHP 例子，这个例子不需要安装任何扩展，只需要包含一个 OAuth.php 文件。我尽量在代码中添加了足够详细的注释。
+
+OAuth.php 文件来自于另外一个项目：<a href="http://code.google.com/p/oauth/">http://code.google.com/p/oauth/</a>
