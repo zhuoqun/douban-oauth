@@ -13,11 +13,6 @@ $api_key = 'your douban api key';
 // 你的私钥
 $api_key_secret = 'your douban api secret key';
 
-// 你的 API Key
-$api_key = '0fddce7bb96c9ce52f996b732c45d6af';
-// 你的私钥
-$api_key_secret = '39d462490180bf67';
-
 // OAuth 验证方法，这里选择 HMAC_SHA1
 $hmac_method = new OAuthSignatureMethod_HMAC_SHA1();
 $sig_method = $hmac_method;

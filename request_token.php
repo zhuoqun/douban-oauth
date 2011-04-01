@@ -83,12 +83,14 @@ curl_close($ch);
  *
  */
 
-$authorize_request_url = $authorize_url . "?" . $result . "&oauth_callback=http://yourappdomain.com/access_and_post.php";
+$callback = urlencode("http://yourappdomain.com/access_and_post.php?" . $result);
+$authorize_request_url = $authorize_url . "?" . $result . "&oauth_callback=" . $callback;
 
 /*
  * $authorize_request_url 的形式如下：
- * http://www.douban.com/service/auth/authorize?oauth_token_secret=aaa&oauth_token=bbb&oauth_callback=http://yourappdomain.com/
- * 访问这个 URL 会出现豆瓣请求授权的页面（第三方应用需要访问你在豆瓣上的个人数据，允许？不允许）。在这个页面中用户如果点击“允许”，豆瓣就会同意授权。然后页面会跳转到 oauth_callback 指向的页面并带上 oauth_token 参数， 也就是这个 URL：http://yourappdomain.com/access_and_post.php?oauth_token=e901dc20d76b1821bb05946286414863
+ * http://www.douban.com/service/auth/authorize?oauth_token_secret=xxxxx&oauth_token=xxxxx&oauth_callback=http%3A%2F%2Fyourappdomain.com%2Faccess_and_post.php%3Foauth_token_secret%3Dxxxx%26oauth_token%3Dxxxx
+ *
+ * 访问这个 URL 会出现豆瓣请求授权的页面（第三方应用需要访问你在豆瓣上的个人数据，允许？不允许）。在这个页面中用户如果点击“允许”，豆瓣就会同意授权。然后页面会跳转到 oauth_callback 指向的页面
  *
  * 接下来就是获取 access token。
  */
