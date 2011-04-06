@@ -74,21 +74,25 @@ curl_setopt($ch,CURLOPT_URL, $req_req->to_url());
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
 $result = curl_exec($ch);
 curl_close($ch);
+parse_str($result, $arr);
+$param_str = 'oauth_token=' . $arr['oauth_token'];
 /*
  * 这里的 result 结果是这样的字符串：
  *
  * oauth_token_secret=aaaaaaaa&oauth_token=bbbbbbbbb
  *
- * 然后利用它来构造一个授权 URL，如下：
+ * 然后利用它来构造一个授权 URL，这里注意， 请先保存 oauth_token_secret，不要明文传递 token_secret. 如下：
  *
  */
+session_start();
+$_SESSION['request_token_secret'] = $arr['oauth_token_secret'];
 
-$callback = urlencode("http://yourappdomain.com/access_and_post.php?" . $result);
-$authorize_request_url = $authorize_url . "?" . $result . "&oauth_callback=" . $callback;
+$callback = urlencode("http://yourappdomain.com/access_and_post.php");
+$authorize_request_url = $authorize_url . "?" . $param_str . "&oauth_callback=" . $callback;
 
 /*
  * $authorize_request_url 的形式如下：
- * http://www.douban.com/service/auth/authorize?oauth_token_secret=xxxxx&oauth_token=xxxxx&oauth_callback=http%3A%2F%2Fyourappdomain.com%2Faccess_and_post.php%3Foauth_token_secret%3Dxxxx%26oauth_token%3Dxxxx
+ * http://www.douban.com/service/auth/authorize?oauth_token=xxxxx&oauth_callback=http%3A%2F%2Fyourappdomain.com%2Faccess_and_post.php
  *
  * 访问这个 URL 会出现豆瓣请求授权的页面（第三方应用需要访问你在豆瓣上的个人数据，允许？不允许）。在这个页面中用户如果点击“允许”，豆瓣就会同意授权。然后页面会跳转到 oauth_callback 指向的页面
  *

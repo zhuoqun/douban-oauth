@@ -11,7 +11,9 @@ require('config.inc');
 
 // 获取之前的 oauth_token 和 oauth_token_secret 。在上一步授权之后会带着这两个参数跳转到本页，见 request_token.php
 $oauth_token = $_REQUEST['oauth_token'];
-$oauth_token_secret = $_REQUEST['oauth_token_secret'];
+
+session_start();
+$oauth_token_secret = $_SESSION['oauth_token_secret'];
 
 // 创建一个 OAuthConsumer 对象。
 $consumer = new OAuthConsumer($api_key, $api_key_secret);
