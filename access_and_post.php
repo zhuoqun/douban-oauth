@@ -13,7 +13,7 @@ require('config.inc');
 $oauth_token = $_REQUEST['oauth_token'];
 
 session_start();
-$oauth_token_secret = $_SESSION['oauth_token_secret'];
+$oauth_token_secret = $_SESSION['request_token_secret'];
 
 // 创建一个 OAuthConsumer 对象。
 $consumer = new OAuthConsumer($api_key, $api_key_secret);
